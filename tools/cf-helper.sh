@@ -58,7 +58,7 @@ case $1 in
 		cf_login
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-webhook"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		yes | cf stop github-webhook
 		yes | cf stop github-analytics
@@ -68,7 +68,7 @@ case $1 in
 		yes | cf stop stubrunner
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-analytics"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		yes | cf stop github-webhook
 		yes | cf stop github-analytics
@@ -111,7 +111,7 @@ case $1 in
 		cf_login
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-webhook"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		cf delete -f github-webhook
 		cf delete -f github-analytics
@@ -120,7 +120,7 @@ case $1 in
 		cf delete -f stubrunner
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-analytics"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		cf delete -f github-webhook
 		cf delete -f github-analytics
@@ -149,14 +149,14 @@ case $1 in
 		cf_login
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-webhook"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		cf delete -f github-webhook
 		cf delete -f github-analytics
 		cf delete -f github-eureka
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-analytics"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		cf delete -f github-webhook
 		cf delete -f github-analytics
@@ -190,10 +190,10 @@ case $1 in
 	setup-spaces)
 		cf_login
 
-		cf create-space "${PAAS_TEST_SPACE_PREFIX}-github-webhook"
-		cf set-space-role user pcfdev-org "${PAAS_TEST_SPACE_PREFIX}-github-webhook" SpaceDeveloper
-		cf create-space "${PAAS_TEST_SPACE_PREFIX}-github-analytics"
-		cf set-space-role user pcfdev-org "${PAAS_TEST_SPACE_PREFIX}-github-analytics" SpaceDeveloper
+		cf create-space "${PAAS_TEST_SPACE_PREFIX}"
+		cf set-space-role user pcfdev-org "${PAAS_TEST_SPACE_PREFIX}" SpaceDeveloper
+		cf create-space "${PAAS_TEST_SPACE_PREFIX}"
+		cf set-space-role user pcfdev-org "${PAAS_TEST_SPACE_PREFIX}" SpaceDeveloper
 
 		cf create-space "${PAAS_STAGE_SPACE}"
 		cf set-space-role user pcfdev-org "${PAAS_STAGE_SPACE}" SpaceDeveloper
@@ -206,7 +206,7 @@ case $1 in
 		cf_login
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-webhook"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		yes | cf delete-service -f mysql-github-webhook
 		yes | cf delete-service -f mysql-github-analytics
@@ -215,7 +215,7 @@ case $1 in
 		yes | cf delete-service -f github-eureka
 
 		if [[ "${REUSE_CF_LOGIN}" != "true" ]]; then
-			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}-github-analytics"
+			cf target -o "${PAAS_TEST_ORG}" -s "${PAAS_TEST_SPACE_PREFIX}"
 		fi
 		yes | cf delete-service -f mysql-github-webhook
 		yes | cf delete-service -f mysql-github-analytics
