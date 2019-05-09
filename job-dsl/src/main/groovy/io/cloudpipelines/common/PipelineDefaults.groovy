@@ -202,7 +202,7 @@ class PipelineDefaults {
 	}
 
 	String cfTestSpacePrefix() {
-		return prop(EnvironmentVariables.PAAS_TEST_SPACE_PREFIX_ENV_VAR, "")
+		return prop(EnvironmentVariables.PAAS_TEST_SPACE_ENV_VAR, "")
 	}
 
 	String cfTestPassword() {
