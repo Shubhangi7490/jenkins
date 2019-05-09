@@ -36,7 +36,7 @@ class PipelineDefaults {
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_STAGE_API_URL_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_PROD_API_URL_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_TEST_ORG_ENV_VAR)
-		setIfPresent(envs, variables, EnvironmentVariables.PAAS_TEST_SPACE_PREFIX_ENV_VAR)
+		setIfPresent(envs, variables, EnvironmentVariables.PAAS_TEST_SPACE_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_STAGE_ORG_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_STAGE_SPACE_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_PROD_ORG_ENV_VAR)
@@ -262,9 +262,9 @@ class PipelineDefaults {
 		return prop(EnvironmentVariables.PAAS_PROD_CLIENT_TOKEN_ID_ENV_VAR, "")
 	}
 // remove::end[K8S]
-	String gitEmail() { return prop(EnvironmentVariables.GIT_EMAIL_ENV_VAR, "pivo@tal.com") }
+	String gitEmail() { return prop(EnvironmentVariables.GIT_EMAIL_ENV_VAR, "fixed-term.shubhangi.vishwakarma@de.bosch.com") }
 
-	String gitName() { return prop(EnvironmentVariables.GIT_NAME_ENV_VAR, "Pivo Tal") }
+	String gitName() { return prop(EnvironmentVariables.GIT_NAME_ENV_VAR, "Shubhangi7490") }
 
 	BashFunctions bashFunctions() {
 		return new BashFunctions(gitName(), gitEmail(), gitUseSshKey())
@@ -322,13 +322,13 @@ class PipelineDefaults {
 	String scriptsBranch() { return prop(EnvironmentVariables.SCRIPTS_BRANCH_ENV_VAR, "master") }
 
 	String scriptsUrl() {
-		return prop(EnvironmentVariables.SCRIPTS_URL_ENV_VAR, "https://github.com/CloudPipelines/scripts/raw/${scriptsBranch()}/dist/scripts.tar.gz")
+		return prop(EnvironmentVariables.SCRIPTS_URL_ENV_VAR, "https://github.com/Shubhangi7490/scripts/raw/${scriptsBranch()}/dist/scripts.tar.gz")
 	}
 
 	String jenkinsScriptsBranch() { return prop(EnvironmentVariables.JENKINS_SCRIPTS_BRANCH_ENV_VAR, "master") }
 
 	String jenkinsScriptsUrl() {
-		return prop(EnvironmentVariables.JENKINS_SCRIPTS_URL_ENV_VAR, "https://github.com/CloudPipelines/jenkins.git")
+		return prop(EnvironmentVariables.JENKINS_SCRIPTS_URL_ENV_VAR, "https://github.com/Shubhangi7490/jenkins.git")
 	}
 
 	RepoType repoType() { return RepoType.from(scriptsUrl()) }
