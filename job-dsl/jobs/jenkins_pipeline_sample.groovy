@@ -50,7 +50,7 @@ boolean rollbackStep = binding.variables["DB_ROLLBACK_STEP_REQUIRED"] == null ? 
 boolean stageStep = binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"] == null ? true : Boolean.parseBoolean(binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"])
 // TODO: Automate customization of this value
 String toolsBranch = binding.variables["SCRIPTS_BRANCH"] ?: "master"
-String toolsRepo = binding.variables["SCRIPTS_URL"] ?: "https://github.com/CloudPipelines/scripts/raw/${toolsBranch}/dist/scripts.tar.gz"
+String toolsRepo = binding.variables["SCRIPTS_URL"] ?: "https://github.com/Shubhangi7490/scripts/raw/${toolsBranch}/dist/scripts.tar.gz"
 RepoType repoType = RepoType.from(toolsRepo)
 // TODO: K8S - consider parametrization
 // remove::start[K8S]
