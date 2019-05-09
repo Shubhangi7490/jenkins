@@ -29,7 +29,7 @@ String gitSshCredentials = binding.variables["GIT_SSH_CREDENTIAL_ID"] ?: "gitSsh
 boolean gitUseSshKey = binding.variables["GIT_USE_SSH_KEY"] == null ? false : Boolean.parseBoolean(binding.variables["GIT_USE_SSH_KEY"])
 String repoWithBinariesCredentials = binding.variables["REPO_WITH_BINARIES_CREDENTIAL_ID"] ?: ""
 String dockerCredentials = binding.variables["DOCKER_REGISTRY_CREDENTIAL_ID"] ?: ""
-String jdkVersion = binding.variables["JDK_VERSION"] ?: "jdk8"
+String jdkVersion = binding.variables["JDK_VERSION"] ?: "jdk11"
 // remove::start[CF]
 String cfTestCredentialId = binding.variables["PAAS_TEST_CREDENTIAL_ID"] ?: ""
 String cfStageCredentialId = binding.variables["PAAS_STAGE_CREDENTIAL_ID"] ?: ""
@@ -40,8 +40,8 @@ String k8sTestTokenCredentialId = binding.variables["PAAS_TEST_CLIENT_TOKEN_ID"]
 String k8sStageTokenCredentialId = binding.variables["PAAS_STAGE_CLIENT_TOKEN_ID"] ?: ""
 String k8sProdTokenCredentialId = binding.variables["PAAS_PROD_CLIENT_TOKEN_ID"] ?: ""
 // remove::end[K8S]
-String gitEmail = binding.variables["GIT_EMAIL"] ?: "pivo@tal.com"
-String gitName = binding.variables["GIT_NAME"] ?: "Pivo Tal"
+String gitEmail = binding.variables["GIT_EMAIL"] ?: "fixed-term.shubhangi.vishwakarma@de.bosch.com"
+String gitName = binding.variables["GIT_NAME"] ?: "Shubhangi7490"
 BashFunctions bashFunctions = new BashFunctions(gitName, gitEmail, gitUseSshKey)
 boolean autoStage = binding.variables["AUTO_DEPLOY_TO_STAGE"] == null ? false : Boolean.parseBoolean(binding.variables["AUTO_DEPLOY_TO_STAGE"])
 boolean autoProd = binding.variables["AUTO_DEPLOY_TO_PROD"] == null ? false : Boolean.parseBoolean(binding.variables["AUTO_DEPLOY_TO_PROD"])
@@ -86,8 +86,8 @@ Closure<String> downloadTools = { String repoUrl ->
 
 // we're parsing the REPOS parameter to retrieve list of repos to build
 String repos = binding.variables["REPOS"] ?:
-	["https://github.com/marcingrzejszczak/github-analytics",
-	 "https://github.com/marcingrzejszczak/github-webhook"].join(",")
+	["https://github.com/Shubhangi7490/github-analytics",
+	 "https://github.com/Shubhangi7490/github-webhook"].join(",")
 List<String> parsedRepos = repos.split(",")
 parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
@@ -742,7 +742,7 @@ class PipelineDefaults {
 		setIfPresent(envs, variables, "PAAS_STAGE_API_URL")
 		setIfPresent(envs, variables, "PAAS_PROD_API_URL")
 		setIfPresent(envs, variables, "PAAS_TEST_ORG")
-		setIfPresent(envs, variables, "PAAS_TEST_SPACE_PREFIX")
+		setIfPresent(envs, variables, "PAAS_TEST_SPACE")
 		setIfPresent(envs, variables, "PAAS_STAGE_ORG")
 		setIfPresent(envs, variables, "PAAS_STAGE_SPACE")
 		setIfPresent(envs, variables, "PAAS_PROD_ORG")
