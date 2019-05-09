@@ -338,7 +338,7 @@ final class EnvironmentVariables {
 	 * {@code PAAS_TEST_SPACE_PREFIX} - Prefix prepended to the application name.
 	 * Together forms a unique name of a test space.
 	 */
-	public static final String PAAS_TEST_SPACE_PREFIX_ENV_VAR = "PAAS_TEST_SPACE_PREFIX"
+	public static final String PAAS_TEST_SPACE_ENV_VAR = "PAAS_TEST_SPACE"
 
 	/**
 	 * {@code PAAS_STAGE_ORG} - Organization used for the stage environment
