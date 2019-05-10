@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	tools {
 		// TODO: how to make this parametrizable?
-		jdk "jdk8"
+		jdk "jdk11"
 	}
 	stages {
 		stage("Build and Upload") {
