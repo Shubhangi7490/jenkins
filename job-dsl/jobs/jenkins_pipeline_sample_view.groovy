@@ -36,7 +36,7 @@ parsedRepos.each {
 		}
 	}
 	String projectName = "${gitRepoName}-pipeline"
-	dsl.deliveryPipelineView(projectName) {
+	dsl.deliveryPipelineView("${projectName}-jobs"/projectName) {
 		allowPipelineStart()
 		pipelineInstances(5)
 		showAggregatedPipeline(false)
