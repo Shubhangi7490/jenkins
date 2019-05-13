@@ -65,7 +65,6 @@ parsedRepos.each {
 		}
 		columns {
 			buildButton()
-			buildParameters(String parameter = null)
 			categorizedJob()
 			lastBuildConsole()
 			lastDuration()
@@ -76,7 +75,7 @@ parsedRepos.each {
 			releaseButton()
 			scmType()
 			status()
-			testResult(int format)
+			testResult(1)
 			userName()
 		}
 		topPortlets {
