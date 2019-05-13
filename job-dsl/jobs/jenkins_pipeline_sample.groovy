@@ -127,9 +127,7 @@ parsedRepos.each {
 
 	//  ======= JOBS =======
 	
-	dsl.folder("${projectName}-jobs") {
-    description('Folder containing all jobs for ${projectName}')
-}
+	dsl.folder("${projectName}-jobs") 
 	dsl.job("${projectName}-jobs/${projectName}-build") {
 		deliveryPipelineConfiguration('Build', 'Build and Upload')
 		triggers {
