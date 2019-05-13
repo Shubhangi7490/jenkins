@@ -36,8 +36,8 @@ parsedRepos.each {
 		}
 	}
 	String projectName = "${gitRepoName}-pipeline"
-	String folderName = "${projectName}-jobs"
-	dsl.deliveryPipelineView(folderName/projectName) {
+	String path = "${projectName}-jobs/${gitRepoName}-pipeline"
+	dsl.deliveryPipelineView(path) {
 		allowPipelineStart()
 		pipelineInstances(5)
 		showAggregatedPipeline(false)
