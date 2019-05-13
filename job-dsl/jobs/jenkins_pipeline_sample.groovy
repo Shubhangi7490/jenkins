@@ -126,7 +126,11 @@ parsedRepos.each {
 	defaults.addEnvVar("PROJECT_NAME", gitRepoName)
 
 	//  ======= JOBS =======
-	dsl.job("${projectName}-build") {
+	
+	dsl.folder("${projectName}-jobs") {
+    description('Folder containing all jobs for ${projectName}')
+}
+	dsl.job("${projectName}-jobs/${projectName}-build") {
 		deliveryPipelineConfiguration('Build', 'Build and Upload')
 		triggers {
 			cron(cronValue)
@@ -200,7 +204,7 @@ parsedRepos.each {
 		}
 	}
 
-	dsl.job("${projectName}-test-env-deploy") {
+	dsl.job("${projectName}-jobs/${projectName}-test-env-deploy") {
 		deliveryPipelineConfiguration('Test', 'Deploy to test')
 		wrappers {
 			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -256,7 +260,7 @@ parsedRepos.each {
 		}
 	}
 
-	dsl.job("${projectName}-test-env-test") {
+	dsl.job("${projectName}-jobs/${projectName}-test-env-test") {
 		deliveryPipelineConfiguration('Test', 'Tests on test')
 		wrappers {
 			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -368,7 +372,7 @@ parsedRepos.each {
 			}
 		}
 
-		dsl.job("${projectName}-test-env-rollback-test") {
+		dsl.job("${projectName}-jobs/${projectName}-test-env-rollback-test") {
 			deliveryPipelineConfiguration('Test', 'Tests on test latest prod version')
 			wrappers {
 				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -446,7 +450,7 @@ parsedRepos.each {
 	}
 
 	if (stageStep) {
-		dsl.job("${projectName}-stage-env-deploy") {
+		dsl.job("${projectName}-jobs/${projectName}-stage-env-deploy") {
 			deliveryPipelineConfiguration('Stage', 'Deploy to stage')
 			wrappers {
 				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -512,7 +516,7 @@ parsedRepos.each {
 			}
 		}
 
-		dsl.job("${projectName}-stage-env-test") {
+		dsl.job("${projectName}-jobs/${projectName}-stage-env-test") {
 			deliveryPipelineConfiguration('Stage', 'End to end tests on stage')
 			wrappers {
 				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -570,7 +574,7 @@ parsedRepos.each {
 		}
 	}
 
-	dsl.job("${projectName}-prod-env-deploy") {
+	dsl.job("${projectName}-jobs/${projectName}-prod-env-deploy") {
 		deliveryPipelineConfiguration('Prod', 'Deploy to prod')
 		wrappers {
 			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -636,7 +640,7 @@ parsedRepos.each {
 		}
 	}
 
-	dsl.job("${projectName}-prod-env-rollback") {
+	dsl.job("${projectName}-jobs/${projectName}-prod-env-rollback") {
 		deliveryPipelineConfiguration('Prod', 'Rollback')
 		wrappers {
 			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
@@ -673,7 +677,7 @@ parsedRepos.each {
 		}
 	}
 
-	dsl.job("${projectName}-prod-env-complete") {
+	dsl.job("${projectName}-jobs/${projectName}-prod-env-complete") {
 		deliveryPipelineConfiguration('Prod', 'Complete switch over')
 		wrappers {
 			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
