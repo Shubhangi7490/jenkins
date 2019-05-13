@@ -59,44 +59,5 @@ parsedRepos.each {
 			(it / 'pagingEnabled').setValue(true)
 		}
 	}
-	
-		dsl.dashboardView("Dashboard") {
-		jobs {
-		     name(projectName)
-		}
-		columns {
-			buildButton()
-			categorizedJob()
-			lastBuildConsole()
-			lastDuration()
-			lastFailure()
-			lastSuccess()
-			name()
-			progressBar()
-			releaseButton()
-			scmType()
-			status()
-			testResult(1)
-			userName()
-		}
-		topPortlets {
-            jenkinsJobsList {
-                 displayName('Test Jobs')
-            }
-       }
-       leftPortlets {
-          testStatisticsChart()
-       }
-      rightPortlets {
-        testTrendChart()
-      }
-      bottomPortlets {
-           iframe {
-                effectiveUrl('http://example.com')
-           }
-           testStatisticsGrid()
-           buildStatistics()
-      }	
-	}
 }
 
