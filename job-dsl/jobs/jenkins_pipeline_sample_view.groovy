@@ -40,7 +40,8 @@ parsedRepos.each {
 	dsl.deliveryPipelineView(path) {
 		allowPipelineStart()
 		pipelineInstances(5)
-		showAggregatedPipeline(false)
+		showAggregatedPipeline(true)
+		linkToConsoleLog(true)
 		columns(1)
 		updateInterval(5)
 		enableManualTriggers()
