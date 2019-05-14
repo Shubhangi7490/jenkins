@@ -91,9 +91,11 @@ String repos = binding.variables["REPOS"] ?:
 List<String> parsedRepos = repos.split(",")
 parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
+	println "Git Repo Name : "+ gitRepoName
 	String fullGitRepo
 	String branchName = "master"
 	int customNameIndex = it.indexOf('$')
+	println "customNameIndex: "+ customNameIndex
 	int customBranchIndex = it.indexOf('#')
 	if (customNameIndex == -1 && customBranchIndex == -1) {
 		// url
