@@ -141,13 +141,8 @@ parsedRepos.each {
 		}
 	} else if (customBranchIndex > -1) {
 		fullGitRepo = it.substring(0, customBranchIndex)
-		if (customBranchIndex < customNameIndex) {
-			// url#someBranch$newName
-			gitRepoName = it.substring(customNameIndex + 1)
-			branchName = it.substring(customBranchIndex + 1, customNameIndex)
-		} else if (customNameIndex == -1) {
+		 if (customNameIndex == -1) {
 			// url#someBranch
-			gitRepoName = it.substring(it.lastIndexOf("/") + 1, customBranchIndex)
 			branchName = it.substring(customBranchIndex + 1)
 		}
 	}
