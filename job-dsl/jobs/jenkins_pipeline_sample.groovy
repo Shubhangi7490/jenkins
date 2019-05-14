@@ -71,6 +71,7 @@ Closure configureScm = { ScmContext context, String repoId, String branchId ->
 		extensions {
 			pathRestriction {
 			    includedRegions("${subProject}/.*")
+				excludedRegions()
 			}
 			sparseCheckoutPath {
                 path(subProject)
