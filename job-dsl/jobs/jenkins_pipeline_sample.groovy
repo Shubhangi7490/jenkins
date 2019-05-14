@@ -108,6 +108,7 @@ parsedRepos.each {
 		} else if (customBranchIndex == -1) {
 			// url$newName
 			gitRepoName = it.substring(customNameIndex + 1)
+			println "Project Name : "+ gitRepoName
 		}
 	} else if (customBranchIndex > -1) {
 		fullGitRepo = it.substring(0, customBranchIndex)
@@ -126,7 +127,7 @@ parsedRepos.each {
 	defaults.addEnvVar("PROJECT_NAME", gitRepoName)
 
 	//  ======= JOBS =======
-	
+	println "Project Name : "+ projectName
 	dsl.folder("${projectName}-jobs") 
 	dsl.job("${projectName}-jobs/${projectName}-build") {
 		deliveryPipelineConfiguration('Build', 'Build and Upload')
