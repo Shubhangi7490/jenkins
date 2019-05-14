@@ -24,7 +24,7 @@ parsedRepos.each {
 			gitRepoName = it.substring(customNameIndex + 1, customBranchIndex)
 		} else if (customBranchIndex == -1) {
 			// url$newName
-			gitRepoName = it.substring(customNameIndex + 1)
+			gitRepoName = it.substring(0, customNameIndex)
 		}
 	} else if (customBranchIndex > -1) {
 		if (customBranchIndex < customNameIndex) {
