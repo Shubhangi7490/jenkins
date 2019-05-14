@@ -17,6 +17,7 @@ List<String> parsedRepos = repos.split(',')
 parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
 	int customNameIndex = it.indexOf('$')
+	int customBranchIndex = it.indexOf('#')
 	if (customNameIndex > -1) {
 		if (customNameIndex < customBranchIndex) {
 			gitRepoName = it.substring(0, customNameIndex)
