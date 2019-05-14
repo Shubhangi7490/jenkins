@@ -91,7 +91,6 @@ String repos = binding.variables["REPOS"] ?:
 List<String> parsedRepos = repos.split(",")
 parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
-	println "Git Repo Name : "+ gitRepoName
 	String fullGitRepo
 	String branchName = "master"
 	int customNameIndex = it.indexOf('$')
@@ -109,7 +108,7 @@ parsedRepos.each {
 			branchName = it.substring(customBranchIndex + 1)
 		} else if (customBranchIndex == -1) {
 			// url$newName
-			gitRepoName = it.substring(customNameIndex + 1)
+			gitRepoName = it.substring(0, customNameIndex)
 			println "Project Name : "+ gitRepoName
 		}
 	} else if (customBranchIndex > -1) {
