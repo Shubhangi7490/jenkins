@@ -100,7 +100,7 @@ parsedRepos.each {
 		fullGitRepo = it
 		branchName = "master"
 	} else if (customNameIndex > -1 && (customNameIndex < customBranchIndex || customBranchIndex == -1)) {
-		fullGitRepo = it.substring(0, customNameIndex)
+		fullGitRepo = it.substring(customNameIndex + 1)
 		if (customNameIndex < customBranchIndex) {
 			// url$newName#someBranch
 			gitRepoName = it.substring(customNameIndex + 1, customBranchIndex)
