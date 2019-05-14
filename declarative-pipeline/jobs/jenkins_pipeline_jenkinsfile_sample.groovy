@@ -171,4 +171,3 @@ parsedRepos.each {
 		}
 	}
 }
-}
