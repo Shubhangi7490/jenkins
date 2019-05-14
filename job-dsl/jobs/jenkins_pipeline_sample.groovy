@@ -73,9 +73,13 @@ Closure configureScm = { ScmContext context, String repoId, String branchId ->
 			    includedRegions("${subProject}/.*")
 				excludedRegions("")
 			}
-			sparseCheckoutPath {
-                path(subProject)
-            }
+			sparseCheckoutPaths {
+				sparseCheckoutPaths {
+					sparseCheckoutPath {
+						path(subProject)
+					}
+				}
+			}
 			wipeOutWorkspace()
 			submoduleOptions {
 				recursive()
