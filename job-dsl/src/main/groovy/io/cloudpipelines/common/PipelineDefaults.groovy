@@ -22,6 +22,7 @@ class PipelineDefaults {
 
 	private Map<String, String> defaultEnvVars(Map<String, String> variables) {
 		Map<String, String> envs = [:]
+		setIfPresent(envs, variables, EnvironmentVariables.SUBPROJECT_DIR_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PROJECT_NAME_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PROJECT_TYPE_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PAAS_TYPE_ENV_VAR)
@@ -116,6 +117,9 @@ class PipelineDefaults {
 			this.variables.get(key) != null ? this.variables.get(key) : defaultValue
 	}
 
+	String subProjectDirName(){
+	return prop(EnvironmentVariables.SUBPROJECT_DIR_ENV_VAR, "")
+	}
 	// Example of a version with date and time in the name
 	String pipelineVersion() {
 		return prop(EnvironmentVariables.PIPELINE_VERSION_ENV_VAR, '''1.0.0.M1-${GROOVY,script ="new Date().format('yyMMdd_HHmmss')"}-VERSION''')
