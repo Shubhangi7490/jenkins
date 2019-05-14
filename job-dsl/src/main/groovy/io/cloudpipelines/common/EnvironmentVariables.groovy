@@ -17,7 +17,13 @@ import groovy.transform.CompileStatic
  */
 @CompileStatic
 final class EnvironmentVariables {
+	
 
+	// tag::envs[]
+	/**
+	 * {@code SUBPROJECT_DIR} - sub project directory for multi project module
+	 */
+	public static final String SUBPROJECT_DIR_ENV_VAR = "SUBPROJECT_DIR"
 	// tag::envs[]
 	/**
 	 * {@code GIT_CREDENTIAL_ID} - ID of credentials used for GIT interaction
