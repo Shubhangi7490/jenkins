@@ -94,7 +94,6 @@ parsedRepos.each {
 	String fullGitRepo
 	String branchName = "master"
 	int customNameIndex = it.indexOf('$')
-	println "customNameIndex: "+ customNameIndex
 	int customBranchIndex = it.indexOf('#')
 	if (customNameIndex == -1 && customBranchIndex == -1) {
 		// url
@@ -109,7 +108,6 @@ parsedRepos.each {
 		} else if (customBranchIndex == -1) {
 			// url$newName
 			gitRepoName = it.substring(0, customNameIndex)
-			println "Project Name : "+ gitRepoName
 		}
 	} else if (customBranchIndex > -1) {
 		fullGitRepo = it.substring(0, customBranchIndex)
@@ -128,7 +126,6 @@ parsedRepos.each {
 	defaults.addEnvVar("PROJECT_NAME", gitRepoName)
 
 	//  ======= JOBS =======
-	println "Project Name : "+ projectName
 	dsl.folder("${projectName}-jobs") 
 	dsl.job("${projectName}-jobs/${projectName}-build") {
 		deliveryPipelineConfiguration('Build', 'Build and Upload')
