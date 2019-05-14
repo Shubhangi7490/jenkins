@@ -132,42 +132,17 @@ parsedRepos.each {
 		}
 	}
 	String projectName = "${gitRepoName}-declarative-pipeline"
-	String folderName = "${gitRepoName}-declarative-pipeline-jobs"
 	envs['GIT_REPOSITORY'] = fullGitRepo
 	envs['GIT_BRANCH_NAME'] = branchName
 
 	println "For project [${projectName}] setting repo [${fullGitRepo}] and branch [${branchName}]"
     
-	dsl.folder(folderName) 
-	dsl.pipelineJob("${folderName}/${projectName}") {
+	dsl.pipelineJob(projectName) {
 		environmentVariables(envs)
 		definition {
 			cps {
 				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
 			}
-		}
-	}
-	String path = "${folderName}/${projectName}"
-	dsl.deliveryPipelineView(path) {
-		allowPipelineStart()
-		pipelineInstances(5)
-		showAggregatedPipeline(true)
-		linkToConsoleLog(true)
-		columns(1)
-		updateInterval(5)
-		enableManualTriggers()
-		showAvatars()
-		showChangeLog()
-		pipelines {
-			component("Deployment", "${projectName}-build")
-		}
-		allowRebuild()
-		showDescription()
-		showPromotions()
-		showTotalBuildTime()
-		configure {
-			(it / 'showTestResults').setValue(true)
-			(it / 'pagingEnabled').setValue(true)
 		}
 	}
 }
