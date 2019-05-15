@@ -348,6 +348,13 @@ function parsePipelineDescriptor() {
 	else
 		export PIPELINE_DESCRIPTOR_PRESENT
 		local pipelineDescriptorName="${PIPELINE_DESCRIPTOR}"
+		local ind = expr index "$pipelineDescriptorName" "/"
+		if (( $ind > 0 )); then
+		    echo "Pipeline descriptor is a path"
+			dirpath="${pipelineDescriptorName%/*}"
+			pipelineDescriptorName = "${pipelineDescriptorName##*/}"
+			cd dirpath
+		fi
 		if [[ ! -f "${PIPELINE_DESCRIPTOR}" ]]; then
 			echo "No pipeline descriptor [${PIPELINE_DESCRIPTOR}] found. Will fallback to [${LEGACY_PIPELINE_DESCRIPTOR}]"
 			PIPELINE_DESCRIPTOR_PRESENT="false"
