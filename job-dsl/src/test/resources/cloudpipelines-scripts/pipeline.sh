@@ -487,8 +487,8 @@ function defineProjectSetup() {
 			PROJECT_SETUP="SINGLE_REPO"
 			echo "No build coordinates section found, project setup [${PROJECT_SETUP}], main module path [${mainModulePath}]"
 		fi
-		#ROOT_PROJECT_DIR="."
-		ROOT_PROJECT_DIR="${PROJECT_NAME}"
+		ROOT_PROJECT_DIR="."
+		#ROOT_PROJECT_DIR="${PROJECT_NAME}"
 	else
 		echo "Pipeline descriptor missing"
 		# if pipeline descriptor is missing but a directory with name equal to PROJECT_NAME exists
@@ -514,8 +514,8 @@ function defineProjectSetup() {
 			# No descriptor and no module is present - will treat it as a single repo with no descriptor
 			PROJECT_SETUP="SINGLE_REPO"
 			echo "No descriptor or module found for project with name [${PROJECT_NAME}], project setup [${PROJECT_SETUP}]"
-			#ROOT_PROJECT_DIR="."
-			ROOT_PROJECT_DIR="${PROJECT_NAME}"
+			ROOT_PROJECT_DIR="."
+			#ROOT_PROJECT_DIR="${PROJECT_NAME}"
 		fi
 	fi
 } # }}}
