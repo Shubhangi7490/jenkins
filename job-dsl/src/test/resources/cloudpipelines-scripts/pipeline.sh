@@ -509,7 +509,7 @@ function defineProjectSetup() {
 			fi
 			
 			
-			_PROJECT_DIR="${PROJECT_NAME}"
+			ROOT_PROJECT_DIR="${PROJECT_NAME}"
 		else
 			# No descriptor and no module is present - will treat it as a single repo with no descriptor
 			PROJECT_SETUP="SINGLE_REPO"
