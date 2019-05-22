@@ -216,13 +216,6 @@ parsedRepos.each {
 					}
 				}
 			}
-			git {
-				pushOnlyIfSuccess()
-				tag('origin', "dev/${gitRepoName}/\${PIPELINE_VERSION}") {
-					create()
-					update()
-				}
-			}
 		}
 	}
 
@@ -253,7 +246,7 @@ parsedRepos.each {
 			}
 		}
 		scm {
-			configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+			configureScm(delegate as ScmContext, fullGitRepo, branchName)
 		}
 		steps {
 			shell(downloadTools(fullGitRepo))
@@ -306,7 +299,7 @@ parsedRepos.each {
 			}
 		}
 		scm {
-			configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+			configureScm(delegate as ScmContext, fullGitRepo, branchName)
 		}
 		steps {
 			shell(downloadTools(fullGitRepo))
@@ -365,7 +358,7 @@ parsedRepos.each {
 				}
 			}
 			scm {
-				configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+				configureScm(delegate as ScmContext, fullGitRepo, branchName)
 			}
 			steps {
 				shell(downloadTools(fullGitRepo))
@@ -420,7 +413,7 @@ parsedRepos.each {
 				}
 			}
 			scm {
-				configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+				configureScm(delegate as ScmContext, fullGitRepo, branchName)
 			}
 			steps {
 				shell(downloadTools(fullGitRepo))
@@ -501,7 +494,7 @@ parsedRepos.each {
 				}
 			}
 			scm {
-				configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+				configureScm(delegate as ScmContext, fullGitRepo, branchName)
 			}
 			steps {
 				shell(downloadTools(fullGitRepo))
@@ -564,7 +557,7 @@ parsedRepos.each {
 				}
 			}
 			scm {
-				configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+				configureScm(delegate as ScmContext, fullGitRepo, branchName)
 			}
 			steps {
 				shell(downloadTools(fullGitRepo))
@@ -621,7 +614,7 @@ parsedRepos.each {
 			}
 		}
 		scm {
-			configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+			configureScm(delegate as ScmContext, fullGitRepo, branchName)
 		}
 		configure { def project ->
 			// Adding user email and name here instead of global settings
@@ -688,7 +681,7 @@ parsedRepos.each {
 			}
 		}
 		scm {
-			configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+			configureScm(delegate as ScmContext, fullGitRepo, branchName)
 		}
 		steps {
 			shell(downloadTools(fullGitRepo))
@@ -724,7 +717,7 @@ parsedRepos.each {
 			}
 		}
 		scm {
-			configureScm(delegate as ScmContext, fullGitRepo, "dev/${gitRepoName}/\${PIPELINE_VERSION}")
+			configureScm(delegate as ScmContext, fullGitRepo, branchName)
 		}
 		steps {
 			shell(downloadTools(fullGitRepo))
