@@ -159,7 +159,7 @@ parsedRepos.each {
 			githubPush()
 		}
 		wrappers {
-			deliveryPipelineVersion(pipelineVersion, true)
+			//deliveryPipelineVersion(pipelineVersion, true)
 			environmentVariables(defaults.defaultEnvVars)
 			timestamps()
 			colorizeOutput()
@@ -222,7 +222,7 @@ parsedRepos.each {
 	dsl.job("${projectName}-jobs/${projectName}-test-env-deploy") {
 		deliveryPipelineConfiguration('Test', 'Deploy to test')
 		wrappers {
-			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
 				// remove::start[CF]
@@ -278,7 +278,7 @@ parsedRepos.each {
 	dsl.job("${projectName}-jobs/${projectName}-test-env-test") {
 		deliveryPipelineConfiguration('Test', 'Tests on test')
 		wrappers {
-			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
 				// remove::start[CF]
@@ -338,7 +338,7 @@ parsedRepos.each {
 		dsl.job("${projectName}-test-env-rollback-deploy") {
 			deliveryPipelineConfiguration('Test', 'Deploy to test latest prod version')
 			wrappers {
-				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+				//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 				environmentVariables {
 					environmentVariables(defaults.defaultEnvVars)
 				}
@@ -390,7 +390,7 @@ parsedRepos.each {
 		dsl.job("${projectName}-jobs/${projectName}-test-env-rollback-test") {
 			deliveryPipelineConfiguration('Test', 'Tests on test latest prod version')
 			wrappers {
-				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+				//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 				environmentVariables {
 					environmentVariables(defaults.defaultEnvVars)
 				}
@@ -468,7 +468,7 @@ parsedRepos.each {
 		dsl.job("${projectName}-jobs/${projectName}-stage-env-deploy") {
 			deliveryPipelineConfiguration('Stage', 'Deploy to stage')
 			wrappers {
-				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+				//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 				maskPasswords()
 				environmentVariables {
 					environmentVariables(defaults.defaultEnvVars)
@@ -534,7 +534,7 @@ parsedRepos.each {
 		dsl.job("${projectName}-jobs/${projectName}-stage-env-test") {
 			deliveryPipelineConfiguration('Stage', 'End to end tests on stage')
 			wrappers {
-				deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+				//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 				environmentVariables {
 					environmentVariables(defaults.defaultEnvVars)
 				}
@@ -592,7 +592,7 @@ parsedRepos.each {
 	dsl.job("${projectName}-jobs/${projectName}-prod-env-deploy") {
 		deliveryPipelineConfiguration('Prod', 'Deploy to prod')
 		wrappers {
-			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
@@ -658,7 +658,7 @@ parsedRepos.each {
 	dsl.job("${projectName}-jobs/${projectName}-prod-env-rollback") {
 		deliveryPipelineConfiguration('Prod', 'Rollback')
 		wrappers {
-			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
@@ -695,7 +695,7 @@ parsedRepos.each {
 	dsl.job("${projectName}-jobs/${projectName}-prod-env-complete") {
 		deliveryPipelineConfiguration('Prod', 'Complete switch over')
 		wrappers {
-			deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
+			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
