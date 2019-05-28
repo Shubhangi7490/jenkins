@@ -57,6 +57,7 @@ RepoType repoType = RepoType.from(toolsRepo)
 String mySqlRootCredential = binding.variables["MYSQL_ROOT_CREDENTIAL_ID"] ?: ""
 String mySqlCredential = binding.variables["MYSQL_CREDENTIAL_ID"] ?: ""
 // remove::end[K8S]
+String subProject = binding.variables["MANIFEST_PATH"] ?: "manifest.yml"
 String subProject = binding.variables["SUBPROJECT_DIR"] ?: ""
 Closure configureScm = { ScmContext context, String repoId, String branchId ->
 	if (subProject?.trim()) {
@@ -753,6 +754,7 @@ class PipelineDefaults {
 
 	private Map<String, String> defaultEnvVars(Map<String, String> variables) {
 		Map<String, String> envs = [:]
+		setIfPresent(envs, variables, "MANIFEST_PATH")
 		setIfPresent(envs, variables, "SUBPROJECT_DIR")
 		setIfPresent(envs, variables, "PROJECT_NAME")
 		setIfPresent(envs, variables, "PROJECT_TYPE")
