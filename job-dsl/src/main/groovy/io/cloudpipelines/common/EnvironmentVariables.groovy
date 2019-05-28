@@ -18,7 +18,12 @@ import groovy.transform.CompileStatic
 @CompileStatic
 final class EnvironmentVariables {
 	
-
+	
+    // tag::envs[]
+	/**
+	 * {@code MANIFEST_PATH} - path of manifest.yml
+	 */
+	public static final String MANIFEST_PATH_ENV_VAR = "MANIFEST_PATH" 
 	// tag::envs[]
 	/**
 	 * {@code SUBPROJECT_DIR} - sub project directory for multi project module
