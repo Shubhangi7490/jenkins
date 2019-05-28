@@ -225,6 +225,7 @@ parsedRepos.each {
 			//deliveryPipelineVersion('${ENV,var="PIPELINE_VERSION"}', true)
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
+				if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 				// remove::start[CF]
 				if (cfTestCredentialId) usernamePassword('PAAS_TEST_USERNAME', 'PAAS_TEST_PASSWORD', cfTestCredentialId)
 				// remove::end[CF]
@@ -343,6 +344,7 @@ parsedRepos.each {
 					environmentVariables(defaults.defaultEnvVars)
 				}
 				credentialsBinding {
+					if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 					// remove::start[CF]
 					if (cfTestCredentialId) usernamePassword('PAAS_TEST_USERNAME', 'PAAS_TEST_PASSWORD', cfTestCredentialId)
 					// remove::end[CF]
@@ -474,6 +476,7 @@ parsedRepos.each {
 					environmentVariables(defaults.defaultEnvVars)
 				}
 				credentialsBinding {
+					if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 					// remove::start[CF]
 					if (cfStageCredentialId) usernamePassword('PAAS_STAGE_USERNAME', 'PAAS_STAGE_PASSWORD', cfStageCredentialId)
 					// remove::end[CF]
@@ -596,6 +599,7 @@ parsedRepos.each {
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
+				if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 				// remove::start[CF]
 				if (cfProdCredentialId) usernamePassword('PAAS_PROD_USERNAME', 'PAAS_PROD_PASSWORD', cfProdCredentialId)
 				// remove::end[CF]
@@ -662,6 +666,7 @@ parsedRepos.each {
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
+				if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 				// remove::start[CF]
 				if (cfProdCredentialId) usernamePassword('PAAS_PROD_USERNAME', 'PAAS_PROD_PASSWORD', cfProdCredentialId)
 				// remove::end[CF]
@@ -699,6 +704,7 @@ parsedRepos.each {
 			maskPasswords()
 			environmentVariables(defaults.defaultEnvVars)
 			credentialsBinding {
+				if (repoWithBinariesCredentials) usernamePassword('M2_SETTINGS_REPO_USERNAME', 'M2_SETTINGS_REPO_PASSWORD', repoWithBinariesCredentials)
 				// remove::start[CF]
 				if (cfProdCredentialId) usernamePassword('PAAS_PROD_USERNAME', 'PAAS_PROD_PASSWORD', cfProdCredentialId)
 				// remove::end[CF]
