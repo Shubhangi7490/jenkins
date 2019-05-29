@@ -57,7 +57,7 @@ RepoType repoType = RepoType.from(toolsRepo)
 String mySqlRootCredential = binding.variables["MYSQL_ROOT_CREDENTIAL_ID"] ?: ""
 String mySqlCredential = binding.variables["MYSQL_CREDENTIAL_ID"] ?: ""
 // remove::end[K8S]
-String subProject = binding.variables["MANIFEST_PATH"] ?: "manifest.yml"
+String manifestPath = binding.variables["MANIFEST_PATH"] ?: "manifest.yml"
 String subProject = binding.variables["SUBPROJECT_DIR"] ?: ""
 Closure configureScm = { ScmContext context, String repoId, String branchId ->
 	if (subProject?.trim()) {
