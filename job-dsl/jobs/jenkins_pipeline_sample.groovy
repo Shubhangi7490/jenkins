@@ -155,6 +155,16 @@ parsedRepos.each {
 	dsl.folder("${projectName}-jobs") 
 	dsl.job("${projectName}-jobs/${projectName}-build") {
 		deliveryPipelineConfiguration('Build', 'Build and Upload')
+		agent {
+         // Equivalent to "docker build -f Dockerfile.build --build-arg version=1.0.2 ./build/
+            dockerfile {
+            	 filename 'Dockerfile'
+            	 dir 'bes-blob-storage/ci'
+            	 label 'docker-agent'
+            	 reuseNode true
+            	 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+            }
+		}
 		triggers {
 			cron(cronValue)
 			githubPush()
