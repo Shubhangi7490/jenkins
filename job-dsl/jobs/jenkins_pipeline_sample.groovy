@@ -164,6 +164,9 @@ parsedRepos.each {
 			buildInDocker {
                dockerfile('bes-blob-storage/ci','Dockerfile')
                //volume('/dev/urandom', '/dev/random')
+			   userGroup('docker')
+			   startCommand('wrapdocker /bin/cat')
+			   privilegedMode(true)
                verbose()
             }
 			environmentVariables(defaults.defaultEnvVars)
