@@ -61,7 +61,7 @@ String manifestPath = binding.variables["MANIFEST_PATH"] ?: "manifest.yml"
 String subProject = binding.variables["SUBPROJECT_DIR"] ?: ""
 Closure configureScm = { ScmContext context, String repoId, String branchId ->
 	if (subProject?.trim()) {
-	  String mod = 	
+	  	
 	  context.git {
 		remote {
 			name('origin')
