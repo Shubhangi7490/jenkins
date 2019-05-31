@@ -139,14 +139,20 @@ pipeline {
 		}
 
 		stage("Deploy to test") {
-		    agent {
-			   docker {
-				 image 'adoptopenjdk/openjdk11'
-                 alwaysPull true
-       			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
-			  }
-   		    }
 			steps {
+			    checkout([
+					$class: 'GitSCM',
+					branches: [
+						[name: "*/${env.SCRIPTS_BRANCH}"]
+					],
+					extensions: [
+						[$class: 'WipeWorkspace'],
+						[$class: 'RelativeTargetDirectory', relativeTargetDir: "${env.WORKSPACE}@tools"]
+					],
+					userRemoteConfigs: [
+						[credentialsId: env.GIT_CREDENTIAL_ID, url: env.SCRIPTS_URL]
+					]
+				])
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_deploy.sh
 				'''
