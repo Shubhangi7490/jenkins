@@ -7,21 +7,20 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
-	agent {
-    // Equivalent to "docker build -f Dockerfile.build --build-arg version=1.0.2 ./build/
-       dockerfile {
-       	 filename 'Dockerfile'
-       	 dir 'bes-blob-storage/ci'
-       	 label 'docker-agent'
-       	 args '-v /tmp/jenkins/.gradle:/root/.gradle'
-   	  }
-    }
-	tools {
-		// TODO: how to make this parametrizable?
-		jdk "jdk11"
-	}
+
 	stages {
 		stage("Build and Upload") {
+		    agent {
+    			// Equivalent to "docker build -f Dockerfile.build --build-arg version=1.0.2 ./build/
+    		   dockerfile {
+     		  	 //filename 'Dockerfile'
+      		 	 //dir 'bes-blob-storage/ci'
+       			 //label 'docker-agent'
+				 image 'adoptopenjdk/openjdk11'
+                 alwaysPull true
+       			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+  		 	  }
+   		   }
 			steps {
 				checkout(
 				   script {
