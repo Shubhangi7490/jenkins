@@ -139,11 +139,13 @@ pipeline {
 		}
 
 		stage("Deploy to test") {
-		    docker {
+		    agent {
+			   docker {
 				 image 'adoptopenjdk/openjdk11'
                  alwaysPull true
        			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
-			}
+			  }
+   		    }
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_deploy.sh
@@ -152,11 +154,13 @@ pipeline {
 		}
 
 		stage("Tests on test") {
-		    docker {
+		    agent {
+			   docker {
 				 image 'adoptopenjdk/openjdk11'
                  alwaysPull true
        			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
-			}
+			  }
+   		    }
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_smoke.sh
