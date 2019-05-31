@@ -141,6 +141,20 @@ pipeline {
 		stage("Deploy to test") {
 			steps {
 			    checkout([
+						$class: 'GitSCM',
+						clearWorkspace: true,
+						branches: [
+							[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+						],
+						extensions: [
+							[$class: 'WipeWorkspace'],
+						],
+						userRemoteConfigs: [
+							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
+								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
+						]
+				])
+			    checkout([
 					$class: 'GitSCM',
 					branches: [
 						[name: "*/${env.SCRIPTS_BRANCH}"]
