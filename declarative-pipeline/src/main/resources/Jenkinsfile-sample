@@ -1,5 +1,6 @@
 pipeline {
     agent any
+	
     options {
         // disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr:'5'))
@@ -12,12 +13,14 @@ pipeline {
 	stages {
 		stage("Build and Upload") {
 		    agent {
+			   docker { 
      		  	 //filename 'Dockerfile'
       		 	 //dir 'bes-blob-storage/ci'
        			 //label 'docker-agent'
 				 image 'adoptopenjdk/openjdk11'
                  alwaysPull true
        			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+			  }
    		   }
 			steps {
 				checkout(
