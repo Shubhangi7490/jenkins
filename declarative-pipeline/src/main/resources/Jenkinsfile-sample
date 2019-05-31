@@ -1,5 +1,21 @@
 pipeline {
-	agent any
+    options {
+        // disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr:'5'))
+    }
+
+    triggers {
+        pollSCM('* * * * *')
+    }
+	agent {
+    // Equivalent to "docker build -f Dockerfile.build --build-arg version=1.0.2 ./build/
+       dockerfile {
+       	 filename 'Dockerfile'
+       	 dir 'bes-blob-storage/ci'
+       	 label 'docker-agent'
+       	 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+   	  }
+    }
 	tools {
 		// TODO: how to make this parametrizable?
 		jdk "jdk11"
@@ -7,20 +23,42 @@ pipeline {
 	stages {
 		stage("Build and Upload") {
 			steps {
-				checkout([
-					$class: 'GitSCM',
-					clearWorkspace: true,
-					branches: [
-						[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
-					],
-					extensions: [
-						[$class: 'WipeWorkspace'],
-					],
-					userRemoteConfigs: [
-						[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
-							env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
-					]
-				])
+				checkout(
+				   script {
+					if (!env.SUBPROJECT_DIR) {
+						[
+						$class: 'GitSCM',
+						clearWorkspace: true,
+						branches: [
+							[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+						],
+						extensions: [
+							[$class: 'WipeWorkspace'],
+						],
+						userRemoteConfigs: [
+							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
+								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
+						]
+					  ]
+					}
+					else{
+					    [
+						$class: 'GitSCM',
+						clearWorkspace: true,
+						branches: [
+							[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+						],
+						extensions: [
+							[$class: 'WipeWorkspace'],
+						],
+						userRemoteConfigs: [
+							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
+								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
+						]
+					  ]
+					}
+				  }
+				)
 
 				checkout([
 					$class: 'GitSCM',
