@@ -13,20 +13,14 @@ pipeline {
 	stages {
 		stage("Build and Upload") {
 		    agent {
-			   docker { 
-     		  	 //filename 'Dockerfile'
-      		 	 //dir 'bes-blob-storage/ci'
-       			 //label 'docker-agent'
+			   docker {
 				 image 'adoptopenjdk/openjdk11'
                  alwaysPull true
        			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
 			  }
    		   }
 			steps {
-				checkout(
-				   script {
-					if (!env.SUBPROJECT_DIR) {
-						[
+				checkout([
 						$class: 'GitSCM',
 						clearWorkspace: true,
 						branches: [
@@ -39,26 +33,7 @@ pipeline {
 							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
 								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
 						]
-					  ]
-					}
-					else{
-					    [
-						$class: 'GitSCM',
-						clearWorkspace: true,
-						branches: [
-							[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
-						],
-						extensions: [
-							[$class: 'WipeWorkspace'],
-						],
-						userRemoteConfigs: [
-							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
-								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
-						]
-					  ]
-					}
-				  }
-				)
+				])
 
 				checkout([
 					$class: 'GitSCM',
@@ -164,6 +139,11 @@ pipeline {
 		}
 
 		stage("Deploy to test") {
+		    docker {
+				 image 'adoptopenjdk/openjdk11'
+                 alwaysPull true
+       			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+			}
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_deploy.sh
@@ -172,6 +152,11 @@ pipeline {
 		}
 
 		stage("Tests on test") {
+		    docker {
+				 image 'adoptopenjdk/openjdk11'
+                 alwaysPull true
+       			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
+			}
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_smoke.sh
@@ -272,9 +257,12 @@ pipeline {
 	}
 	post {
 		always {
-			junit '**/surefire-reports/*.xml,**/test-results/**/*.xml'
-			archive "**/build/**/k8s/*.yml"
-			archive "**/target/**/k8s/*.yml"
+			fixed {
+           		slackSend color: 'good', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Back to normal (<${env.RUN_DISPLAY_URL}|Open>)"
+            }
+        	failure {
+            	slackSend color: 'danger', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Failure after ${currentBuild.durationString.replace(' and counting', '')} (<${env.RUN_DISPLAY_URL}|Open>)"
+       		}
 		}
 	}
 }
