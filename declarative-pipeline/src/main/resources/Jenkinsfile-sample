@@ -20,6 +20,7 @@ pipeline {
 			  }
    		   }
 			steps {
+			    println env.GIT_BRANCH_NAME
 				checkout([
 						$class: 'GitSCM',
 						clearWorkspace: true,
@@ -140,6 +141,7 @@ pipeline {
 
 		stage("Deploy to test") {
 			steps {
+			    println env.GIT_BRANCH_NAME
 			    checkout([
 						$class: 'GitSCM',
 						clearWorkspace: true,
@@ -174,14 +176,36 @@ pipeline {
 		}
 
 		stage("Tests on test") {
-		    agent {
-			   docker {
-				 image 'adoptopenjdk/openjdk11'
-                 alwaysPull true
-       			 args '-v /tmp/jenkins/.gradle:/root/.gradle'
-			  }
-   		    }
 			steps {
+			    println env.GIT_BRANCH_NAME
+			    checkout([
+						$class: 'GitSCM',
+						clearWorkspace: true,
+						branches: [
+							[name: "*/${env.GIT_BRANCH_NAME ?: 'master'}"]
+						],
+						extensions: [
+							[$class: 'WipeWorkspace'],
+						],
+						userRemoteConfigs: [
+							[credentialsId: Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE ?
+								env.GIT_SSH_CREDENTIAL_ID : env.GIT_CREDENTIAL_ID, url: env.GIT_REPOSITORY]
+						]
+				])
+			    checkout([
+					$class: 'GitSCM',
+					branches: [
+						[name: "*/${env.SCRIPTS_BRANCH}"]
+					],
+					extensions: [
+						[$class: 'WipeWorkspace'],
+						[$class: 'RelativeTargetDirectory', relativeTargetDir: "${env.WORKSPACE}@tools"]
+					],
+					userRemoteConfigs: [
+						[credentialsId: env.GIT_CREDENTIAL_ID, url: env.SCRIPTS_URL]
+					]
+				]) 
+				
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/test_smoke.sh
 				'''
