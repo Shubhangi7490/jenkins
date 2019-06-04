@@ -103,42 +103,9 @@ envs["DOCKER_REGISTRY_URL"] = binding.variables["DOCKER_REGISTRY_URL"] ?: "https
 envs["MANIFEST_PATH"] = binding.variables["MANIFEST_PATH"] ?: "manifest.yml"
 envs ["SUBPROJECT_DIR"] = binding.variables["SUBPROJECT_DIR"] ?: ""
 
-/*
-parsedRepos.each {
-	String gitRepoName = it.split('/').last() - '.git'
-	String fullGitRepo = it
-	String branchName = "master"
-	int customNameIndex = it.indexOf('$')
-	int customBranchIndex = it.indexOf('#')
-	if (customNameIndex == -1 && customBranchIndex == -1) {
-		// url
-		fullGitRepo = it
-		branchName = "master"
-	} else if (customNameIndex > -1 && (customNameIndex < customBranchIndex || customBranchIndex == -1)) {
-		fullGitRepo = it.substring(customNameIndex + 1)
-		if (customNameIndex < customBranchIndex) {
-			// url$newName#someBranch
-			gitRepoName = it.substring(customNameIndex + 1, customBranchIndex)
-			branchName = it.substring(customBranchIndex + 1)
-		} else if (customBranchIndex == -1) {
-			// url$newName
-			gitRepoName = it.substring(0, customNameIndex)
-		}
-	} else if (customBranchIndex > -1) {
-		fullGitRepo = it.substring(0, customBranchIndex)
-		if (customBranchIndex < customNameIndex) {
-			// url#someBranch$newName
-			gitRepoName = it.substring(customNameIndex + 1)
-			branchName = it.substring(customBranchIndex + 1, customNameIndex)
-		} else if (customNameIndex == -1) {
-			// url#someBranch
-			gitRepoName = it.substring(it.lastIndexOf("/") + 1, customBranchIndex)
-			branchName = it.substring(customBranchIndex + 1)
-		}
-	}
-	*/
 
-    parsedRepos.each {
+
+parsedRepos.each {
 	String gitRepoName = it.split('/').last() - '.git'
 	String fullGitRepo
 	String branchName = "master"
@@ -177,6 +144,21 @@ parsedRepos.each {
 		definition {
 			cps {
 				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-sample')}""")
+			}
+		}
+	}
+	
+	String projectName = "${gitRepoName}-declarative-pipeline-production"
+	envs['GIT_REPOSITORY'] = fullGitRepo
+	envs['GIT_BRANCH_NAME'] = branchName
+
+	println "For project [${projectName}] setting repo [${fullGitRepo}] and branch [${branchName}]"
+    
+	dsl.pipelineJob(projectName) {
+		environmentVariables(envs)
+		definition {
+			cps {
+				script("""${dsl.readFileFromWorkspace(jenkinsfileDir + '/Jenkinsfile-prod')}""")
 			}
 		}
 	}
