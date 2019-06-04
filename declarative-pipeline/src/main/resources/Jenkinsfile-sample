@@ -267,58 +267,23 @@ pipeline {
 				'''
 			}
 		}
-
-		stage("Deploy to prod") {
-			when {
+		
+		stage ('Trigger Production Deployment') {
+		     when {
 				environment name: 'DEPLOY_TO_PROD',
 				value: 'yes'
 			}
-			steps {
-				sh """
-					${
-						if (Boolean.parseBoolean(env.GIT_USE_SSH_KEY) == Boolean.TRUE) {
-							return """
-							eval "\$(ssh-agent -s)"
-							ssh-add /usr/share/jenkins/gitsshkey
-							"""
-						} else {
-							return """
-							# https://issues.jenkins-ci.org/browse/JENKINS-28335
-							git config --local credential.helper cache
-							echo 'protocol=https\nhost=github.com\nusername=${GIT_USERNAME}\npassword=${GIT_PASSWORD}\n\n' | git credential approve
-							"""
-						}
-					}
-					git tag prod/${env.PROJECT_NAME}/\${PIPELINE_VERSION}
-					git push --tags
-					"""
-
-				sh '''#!/bin/bash
-				${WORKSPACE}@tools/src/main/bash/prod_deploy.sh
-				'''
-			}
+   			 build job: 'RunArtInTest', parameters: [[$class: 'StringParameterValue', name: 'systemname', value: systemname]]
 		}
+	
 
-		stage("Complete switch over") {
-			when {
-				environment name: 'DEPLOY_TO_PROD',
-				value: 'yes'
-			}
-			steps {
-				sh '''#!/bin/bash
-				${WORKSPACE}@tools/src/main/bash/prod_complete.sh
-				'''
-			}
-		}
 	}
 	post {
-		always {
-			fixed {
-           		slackSend color: 'good', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Back to normal (<${env.RUN_DISPLAY_URL}|Open>)"
-            }
-        	failure {
-            	slackSend color: 'danger', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Failure after ${currentBuild.durationString.replace(' and counting', '')} (<${env.RUN_DISPLAY_URL}|Open>)"
-       		}
-		}
+		fixed {
+            slackSend color: 'good', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Back to normal (<${env.RUN_DISPLAY_URL}|Open>)"
+        }
+        failure {
+            slackSend color: 'danger', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Failure after ${currentBuild.durationString.replace(' and counting', '')} (<${env.RUN_DISPLAY_URL}|Open>)"
+        }
 	}
 }
