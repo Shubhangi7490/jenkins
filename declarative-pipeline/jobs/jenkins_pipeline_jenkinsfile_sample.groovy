@@ -148,13 +148,13 @@ parsedRepos.each {
 		}
 	}
 	
-	String projectName = "${gitRepoName}-declarative-pipeline-production"
+	String projectName_prod = "${gitRepoName}-declarative-pipeline-production"
 	envs['GIT_REPOSITORY'] = fullGitRepo
 	envs['GIT_BRANCH_NAME'] = branchName
 
-	println "For project [${projectName}] setting repo [${fullGitRepo}] and branch [${branchName}]"
+	println "For project [${projectName_prod}] setting repo [${fullGitRepo}] and branch [${branchName}]"
     
-	dsl.pipelineJob(projectName) {
+	dsl.pipelineJob(projectName_prod) {
 		environmentVariables(envs)
 		definition {
 			cps {
