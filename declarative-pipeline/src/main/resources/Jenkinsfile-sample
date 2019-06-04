@@ -260,7 +260,6 @@ pipeline {
 				environment name: 'DEPLOY_TO_STAGE_STEP_REQUIRED', value: 'true'
 				environment name: 'EXECUTE_TEST_STEP_REQUIRED', value: 'true'
 			}
-			}
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/stage_e2e.sh
