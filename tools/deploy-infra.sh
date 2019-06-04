@@ -23,7 +23,7 @@ if [[ -z "${POTENTIAL_DOCKER_HOST}" ]]; then
     POTENTIAL_DOCKER_HOST="localhost"
 fi
 
-ARTIFACTORY_URL="${ARTIFACTORY_URL:-https://admin:password@${POTENTIAL_DOCKER_HOST}:8081/artifactory/libs-release-local}"
+ARTIFACTORY_URL="${ARTIFACTORY_URL:-http://eb-bosch.com/artifactory/ThirdParty}"
 ARTIFACTORY_ID="${ARTIFACTORY_ID:-artifactory-local}"
 
 function deploy_project {
@@ -37,7 +37,7 @@ function deploy_project {
 	pushd "${DEST_DIR}"
 	rm -rf "${project_name}"
 	git clone "${project_repo}" "${project_name}" && cd "${project_name}"
-	./mvnw clean deploy \
+	./mvnw clean deploy -e \
 		-Ddistribution.management.release.url="${ARTIFACTORY_URL}" -Ddistribution.management.release.id="${ARTIFACTORY_ID}"
 	popd
 }
