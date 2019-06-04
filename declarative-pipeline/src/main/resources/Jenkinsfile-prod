@@ -8,10 +8,6 @@ pipeline {
 
 	stages {
 		stage("Deploy to prod") {
-			when {
-				environment name: 'DEPLOY_TO_PROD',
-				value: 'yes'
-			}
 			steps {
 				sh """
 					${
@@ -39,10 +35,6 @@ pipeline {
 		}
 
 		stage("Complete switch over") {
-			when {
-				environment name: 'DEPLOY_TO_PROD',
-				value: 'yes'
-			}
 			steps {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/prod_complete.sh
@@ -51,13 +43,11 @@ pipeline {
 		}
 	}
 	post {
-		always {
-			fixed {
-           		slackSend color: 'good', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Back to normal (<${env.RUN_DISPLAY_URL}|Open>)"
-            }
-        	failure {
-            	slackSend color: 'danger', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Failure after ${currentBuild.durationString.replace(' and counting', '')} (<${env.RUN_DISPLAY_URL}|Open>)"
-       		}
-		}
+		fixed {
+            slackSend color: 'good', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Back to normal (<${env.RUN_DISPLAY_URL}|Open>)"
+        }
+        failure {
+            slackSend color: 'danger', message: "${currentBuild.fullDisplayName} - #${env.BUILD_NUMBER} Failure after ${currentBuild.durationString.replace(' and counting', '')} (<${env.RUN_DISPLAY_URL}|Open>)"
+        }
 	}
 }
