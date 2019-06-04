@@ -48,6 +48,7 @@ boolean autoProd = binding.variables["AUTO_DEPLOY_TO_PROD"] == null ? false : Bo
 boolean apiCompatibilityStep = binding.variables["API_COMPATIBILITY_STEP_REQUIRED"] == null ? true : Boolean.parseBoolean(binding.variables["API_COMPATIBILITY_STEP_REQUIRED"])
 boolean rollbackStep = binding.variables["DB_ROLLBACK_STEP_REQUIRED"] == null ? true : Boolean.parseBoolean(binding.variables["DB_ROLLBACK_STEP_REQUIRED"])
 boolean stageStep = binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"] == null ? true : Boolean.parseBoolean(binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"])
+boolean testStep = binding.variables["EXECUTE_TEST_STEP_REQUIRED"] == null ? true : Boolean.parseBoolean(binding.variables["EXECUTE_TEST_STEP_REQUIRED"])
 // TODO: Automate customization of this value
 String toolsBranch = binding.variables["SCRIPTS_BRANCH"] ?: "master"
 String toolsRepo = binding.variables["SCRIPTS_URL"] ?: "https://github.com/Shubhangi7490/scripts/raw/${toolsBranch}/dist/scripts.tar.gz"
@@ -773,6 +774,7 @@ class PipelineDefaults {
 		setIfPresent(envs, variables, "REPO_WITH_BINARIES_FOR_UPLOAD")
 		setIfPresent(envs, variables, "REPO_WITH_BINARIES_CREDENTIAL_ID")
 		setIfPresent(envs, variables, "PIPELINE_DESCRIPTOR")
+		setIfPresent(envs, variables, "EXECUTE_TEST_STEP_REQUIRED")
 		// remove::start[CF]
 		setIfPresent(envs, variables, "PAAS_TEST_API_URL")
 		setIfPresent(envs, variables, "PAAS_STAGE_API_URL")
