@@ -112,13 +112,6 @@ pipeline {
 					}
 					// remove::end[K8S]
 
-					env.DEPLOY_TO_PROD = input message: '', parameters: [
-						choice(
-							name: 'Deploy to prod?',
-							choices: 'no\nyes',
-							description: 'Choose "yes" if you want to deploy this build to production'
-						)
-					]
 				}
 				sh """#!/bin/bash
 				${
@@ -140,6 +133,7 @@ pipeline {
 		}
 
 		stage("Deploy to test") {
+		    
 			steps {
 			    println env.GIT_BRANCH_NAME
 			    checkout([
@@ -176,6 +170,10 @@ pipeline {
 		}
 
 		stage("Tests on test") {
+		    when {
+				environment name: 'EXECUTE_TEST_STEP_REQUIRED',
+					value: 'true'
+			}
 			steps {
 			    println env.GIT_BRANCH_NAME
 			    checkout([
@@ -226,8 +224,8 @@ pipeline {
 
 		stage("Tests on test latest prod version") {
 			when {
-				environment name: 'DB_ROLLBACK_STEP_REQUIRED',
-					value: 'true'
+				environment name: 'DB_ROLLBACK_STEP_REQUIRED', value: 'true'
+				environment name: 'EXECUTE_TEST_STEP_REQUIRED', value: 'true'
 			}
 			steps {
 				sh '''#!/bin/bash
@@ -245,13 +243,23 @@ pipeline {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/stage_deploy.sh
 				'''
+				script{
+					env.DEPLOY_TO_PROD = input message: '', parameters: [
+						choice(
+							name: 'Deploy to prod?',
+							choices: 'no\nyes',
+							description: 'Choose "yes" if you want to deploy this build to production'
+						)
+					]
+				}
 			}
 		}
 
 		stage("End to end tests on stage") {
 			when {
-				environment name: 'DEPLOY_TO_STAGE_STEP_REQUIRED',
-					value: 'true'
+				environment name: 'DEPLOY_TO_STAGE_STEP_REQUIRED', value: 'true'
+				environment name: 'EXECUTE_TEST_STEP_REQUIRED', value: 'true'
+			}
 			}
 			steps {
 				sh '''#!/bin/bash
