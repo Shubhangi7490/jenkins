@@ -243,15 +243,6 @@ pipeline {
 				sh '''#!/bin/bash
 				${WORKSPACE}@tools/src/main/bash/stage_deploy.sh
 				'''
-				script{
-					env.DEPLOY_TO_PROD = input message: '', parameters: [
-						choice(
-							name: 'Deploy to prod?',
-							choices: 'no\nyes',
-							description: 'Choose "yes" if you want to deploy this build to production'
-						)
-					]
-				}
 			}
 		}
 
@@ -269,8 +260,8 @@ pipeline {
 		
 		stage ('Trigger Production Deployment') {
 		     when {
-				environment name: 'DEPLOY_TO_PROD',
-				value: 'yes'
+				environment name: 'AUTO_DEPLOY_TO_PROD',
+				value: 'true'
 			}
 			steps {
    			 build job: '${JOB_NAME}-production', parameters: [[$class: 'StringParameterValue', name: 'systemname', value: systemname]]
