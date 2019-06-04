@@ -42,7 +42,6 @@ envs["AUTO_DEPLOY_TO_STAGE"] = binding.variables["AUTO_DEPLOY_TO_STAGE"] ?: fals
 envs["AUTO_DEPLOY_TO_PROD"] = binding.variables["AUTO_DEPLOY_TO_PROD"] ?: false
 envs["API_COMPATIBILITY_STEP_REQUIRED"] = binding.variables["API_COMPATIBILITY_STEP_REQUIRED"] ?: true
 envs["DB_ROLLBACK_STEP_REQUIRED"] = binding.variables["DB_ROLLBACK_STEP_REQUIRED"] ?: true
-envs["DEPLOY_TO_STAGE_STEP_REQUIRED"] = binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"] ?: true
 envs["EXECUTE_TEST_STEP_REQUIRED"] = binding.variables["EXECUTE_TEST_STEP_REQUIRED"] ?: true
 envs["DEPLOY_TO_STAGE_STEP_REQUIRED"] = binding.variables["DEPLOY_TO_STAGE_STEP_REQUIRED"] ?: true
 // remove::start[CF]
@@ -148,13 +147,13 @@ parsedRepos.each {
 		}
 	}
 	
-	String projectName = "${gitRepoName}-declarative-pipeline-production"
+	String projectName_prod = "${gitRepoName}-declarative-pipeline-production"
 	envs['GIT_REPOSITORY'] = fullGitRepo
 	envs['GIT_BRANCH_NAME'] = branchName
 
-	println "For project [${projectName}] setting repo [${fullGitRepo}] and branch [${branchName}]"
+	println "For project [${projectName_prod}] setting repo [${fullGitRepo}] and branch [${branchName}]"
     
-	dsl.pipelineJob(projectName) {
+	dsl.pipelineJob(projectName_prod) {
 		environmentVariables(envs)
 		definition {
 			cps {
