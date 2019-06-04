@@ -272,7 +272,9 @@ pipeline {
 				environment name: 'DEPLOY_TO_PROD',
 				value: 'yes'
 			}
-   			 build job: 'RunArtInTest', parameters: [[$class: 'StringParameterValue', name: 'systemname', value: systemname]]
+			steps {
+   			 build job: '${JOB_NAME}-production', parameters: [[$class: 'StringParameterValue', name: 'systemname', value: systemname]]
+			 }
 		}
 	
 
