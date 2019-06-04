@@ -18,7 +18,13 @@ import groovy.transform.CompileStatic
 @CompileStatic
 final class EnvironmentVariables {
 	
+
 	
+	// tag::envs[]
+	/**
+	 * {@code EXECUTE_TEST_STEP_REQUIRED} - whether test step is required
+	 */
+	public static final String EXECUTE_TEST_STEP_REQUIRED_ENV_VAR ="EXECUTE_TEST_STEP_REQUIRED"
     // tag::envs[]
 	/**
 	 * {@code MANIFEST_PATH} - path of manifest.yml
