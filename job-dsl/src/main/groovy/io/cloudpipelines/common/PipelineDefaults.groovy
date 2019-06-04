@@ -22,6 +22,7 @@ class PipelineDefaults {
 
 	private Map<String, String> defaultEnvVars(Map<String, String> variables) {
 		Map<String, String> envs = [:]
+		setIfPresent(envs, variables, EnvironmentVariables.MANIFEST_PATH_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.EXECUTE_TEST_STEP_REQUIRED_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.SUBPROJECT_DIR_ENV_VAR)
 		setIfPresent(envs, variables, EnvironmentVariables.PROJECT_NAME_ENV_VAR)
